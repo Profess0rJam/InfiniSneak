@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgfyk4v761t8c"]
+
+[ext_resource type="Script" path="res://StaminaBar.gd" id="1_x2syv"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 206.0
+offset_right = 225.0
+offset_bottom = 233.0
+script = ExtResource("1_x2syv")

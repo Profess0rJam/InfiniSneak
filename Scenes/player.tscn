@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://vld8o0w8lkuh"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_jop0o"]
+[ext_resource type="Texture2D" uid="uid://kbdx8nwkctha" path="res://Images/Player/PlayerPlaceholder.png" id="2_n6lmr"]
+[ext_resource type="Texture2D" uid="uid://byftqa257q8ch" path="res://Images/Player/lightsource.png" id="3_1cnyh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mf3k"]
+radius = 65.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n6x3d"]
+radius = 169.012
+
+[sub_resource type="Gradient" id="Gradient_vik4e"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ggb5"]
+gradient = SubResource("Gradient_vik4e")
+fill_from = Vector2(1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1xwrr"]
+
+[node name="Player" type="CharacterBody2D"]
+scale = Vector2(0.135, 0.135)
+floor_stop_on_slope = false
+script = ExtResource("1_jop0o")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+position = Vector2(-7.7486e-06, 0)
+scale = Vector2(0.380556, 0.358333)
+texture = ExtResource("2_n6lmr")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1mf3k")
+
+[node name="Noise" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="PlayerNoise" type="CollisionShape2D" parent="Noise"]
+shape = SubResource("CircleShape2D_n6x3d")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.505, 1.505)
+
+[node name="PlayerLight" type="PointLight2D" parent="."]
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.972549)
+shadow_filter = 2
+shadow_filter_smooth = 10.0
+shadow_item_cull_mask = 9
+texture = ExtResource("3_1cnyh")
+texture_scale = 7.43
+
+[node name="StaminaBarBackground" type="Sprite2D" parent="."]
+position = Vector2(-1204.89, 1380.3)
+scale = Vector2(23.7639, 2.69907)
+texture = SubResource("GradientTexture2D_3ggb5")
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+offset_left = -1963.0
+offset_top = 1293.0
+offset_right = -444.0
+offset_bottom = 1469.0
+theme_override_font_sizes/font_size = 126
+
+[node name="StaminaBarLight" type="PointLight2D" parent="StaminaBar"]
+position = Vector2(763, 84.7777)
+scale = Vector2(5.03704, 0.592593)
+energy = 0.99
+texture = ExtResource("3_1cnyh")
+
+[node name="Detector" type="Area2D" parent="."]
+
+[node name="DetectorShape" type="CollisionShape2D" parent="Detector"]
+scale = Vector2(2.52, 2.52)
+shape = SubResource("CircleShape2D_1xwrr")
+debug_color = Color(0.607843, 0, 0.117647, 0.737255)
+
+[connection signal="area_shape_entered" from="Detector" to="." method="_on_detector_area_shape_entered"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

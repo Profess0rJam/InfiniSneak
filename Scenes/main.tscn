@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://cahfxdaula5hy"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_q6u84"]
+[ext_resource type="PackedScene" uid="uid://vld8o0w8lkuh" path="res://player.tscn" id="1_xqltf"]
+[ext_resource type="PackedScene" uid="uid://bku753k4mcxna" path="res://title_screen.tscn" id="1_xus8l"]
+[ext_resource type="PackedScene" uid="uid://dnlwdsex3lwqi" path="res://Enemies/enemy.tscn" id="2_y2ftt"]
+[ext_resource type="PackedScene" uid="uid://c81f8x5g0eftv" path="res://map.tscn" id="2_y8h3n"]
+[ext_resource type="Script" path="res://Scripts/GeneratedMap.gd" id="3_u0kdf"]
+[ext_resource type="PackedScene" uid="uid://8q7jcskrxl0x" path="res://global_shadow.tscn" id="5_sybpk"]
+
+[sub_resource type="Gradient" id="Gradient_7vef2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nra7f"]
+gradient = SubResource("Gradient_7vef2")
+fill_from = Vector2(1, 0)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_q6u84")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(978, 558)
+scale = Vector2(36.2344, 21.9531)
+texture = SubResource("GradientTexture2D_nra7f")
+
+[node name="Map" parent="." instance=ExtResource("2_y8h3n")]
+script = ExtResource("3_u0kdf")
+mapWidth = 100
+mapHeight = 60
+terrainSeed = 0
+dark_grass_Threshold = -0.315
+
+[node name="Player" parent="." instance=ExtResource("1_xqltf")]
+position = Vector2(102, 114)
+motion_mode = 1
+wall_min_slide_angle = 0.0
+
+[node name="TitleScreen" parent="." instance=ExtResource("1_xus8l")]
+light_mask = 0
+
+[node name="Enemy" parent="." instance=ExtResource("2_y2ftt")]
+position = Vector2(566, 415)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_y2ftt")]
+position = Vector2(419, 99)
+rotation = -2.50465
+
+[node name="GlobalShadow" parent="." instance=ExtResource("5_sybpk")]
+visible = false
+
+[connection signal="GameOverSignal" from="Player" to="." method="_on_player_game_over_signal"]
+[connection signal="NewGame" from="TitleScreen" to="." method="_on_title_screen_new_game"]
+[connection signal="NewPreBuiltGame" from="TitleScreen" to="." method="_on_title_screen_new_pre_built_game"]
