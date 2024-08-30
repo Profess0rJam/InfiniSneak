@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://8q7jcskrxl0x"]
+
+[node name="GlobalShadow" type="CanvasModulate"]
+light_mask = 0
+visibility_layer = 2
+color = Color(0.0562916, 0.0562916, 0.0562916, 1)
