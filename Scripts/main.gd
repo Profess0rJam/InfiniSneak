@@ -1,13 +1,32 @@
 extends Node
-
-
+var StartingPlayerPosition = Vector2i(102,114)
 
 func _ready():
-	$Camera2D/UI/StaminaBar.set_value($Player.stamina)#Update stamina amount
+	$TitleScreen/TitleCamera.make_current()
+	$GlobalShadow.hide() #Make sure the menu isn't super dark
 
-func _on_player_stamchange(): #Update 
-	$Camera2D/UI/StaminaBar.set_value($Player.stamina) #Update stamina amount
+func _on_title_screen_new_game():
+	$Map.clear() #clear old tilemap
+	$Map.GenerateMap() #generate new map
+	$TitleScreen.hide() #hide title screen
+	$Player/Camera2D.make_current() #switch to player camera
+	$GlobalShadow.show() #Make the shadow 
+
+func _on_title_screen_new_pre_built_game():
+	$Map.clear()#Clear preexisting map
+	$TitleScreen.hide() #hide title screen
+	get_tree().call_group("Enemy", "queue_free") #Despawn pre-existing enemies
+	var LevelOne = preload("res://Levels/level_one.tscn")
+	load("res://Levels/level_one.tscn")
 	
 
-func _process(delta):
-	$Camera2D.position = $Player.position
+
+
+func _on_player_game_over_signal():
+	print("Ope you're dead")
+	$Player.position = StartingPlayerPosition #throw the player back in the corner of the map so they aren't insta-ambushed by enemies upon new game start
+	$TitleScreen.show()
+	$Map.clear()
+	$TitleScreen/TitleCamera.make_current()
+	$GlobalShadow.hide()
+	#get_tree().call_group("Enemy", "queue_free") Despawn pre-existing enemies, fiddling with this currently
