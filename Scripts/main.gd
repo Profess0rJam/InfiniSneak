@@ -12,12 +12,12 @@ func _on_title_screen_new_game():
 	$Player/Camera2D.make_current() #switch to player camera
 	$GlobalShadow.show() #Make the shadow 
 
-func _on_title_screen_new_pre_built_game():
+func _on_title_screen_new_pre_built_game(): #Working towards a game mode that has a series of pre-made maps, rather than leaning on the (currently) unstable mapgen
 	$Map.clear()#Clear preexisting map
 	$TitleScreen.hide() #hide title screen
 	get_tree().call_group("Enemy", "queue_free") #Despawn pre-existing enemies
-	var LevelOne = preload("res://Levels/level_one.tscn")
-	load("res://Levels/level_one.tscn")
+	var LevelOne = preload("res://Levels/level_one.tscn") #I'm literally just learning how to switch scenes, so this doesn't work lmao
+	load("res://Levels/level_one.tscn") #Ditto for this line 
 	
 
 
